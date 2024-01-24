@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\c;
+use App\Models\CreateData;
 use Illuminate\Http\Request;
 
 class CreateDataController extends Controller
@@ -28,7 +29,18 @@ class CreateDataController extends Controller
      */
     public function store(Request $request)
     {
-        return 123;
+        $request->validate([
+            'test_text' => 'required | max: 50',
+            'test_select' => 'required',
+            'radio_option' => 'required'
+        ]);
+        CreateData::create([
+            'test_text' => $request->test_text,
+            'test_text_area' => $request->test_text_area,
+            'test_select' => $request->test_select,
+            'radio_option' => $request->radio_option,
+            'test_check' => $request->test_check ? $request->test_check : 0
+        ]);
     }
 
     /**

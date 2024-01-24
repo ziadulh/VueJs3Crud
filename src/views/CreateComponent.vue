@@ -65,6 +65,10 @@
 </template>
 
 <script>
+import axios from "axios";
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
 export default {
   name: 'CreateComponent',
 
@@ -83,20 +87,36 @@ export default {
   },
 
   methods: {
-    handleSave() {
-      console.log(this.formData);
-    },
-    handleDelete(id) {
-      let newtemp = [];
-      this.total_data.map(el => {
-        // console.log(id, el);
-        if (id != el.id) {
-          return newtemp.push(el);
-        }
+    async handleSave() {
+      let url = "http://127.0.0.1:8000/api/create-data";
+      await axios.post(url, this.formData, (res) => {
+        console.log(res);
       })
-      this.total_data = newtemp;
-      // console.log(newtemp, tempdata, this.total_data);
-    }
+      .then(() => {
+        const $toast = useToast();
+        $toast.success('Info Stored!');
+      })
+      .catch(error => {
+        const $toast = useToast();
+        console.log(error.response.data.errors);
+        $toast.error("Oops! Something went wrong.");
+      })
+      .finally(() => {
+        
+      });
+      // console.log(this.formData);
+    },
+    // handleDelete(id) {
+    //   let newtemp = [];
+    //   this.total_data.map(el => {
+    //     // console.log(id, el);
+    //     if (id != el.id) {
+    //       return newtemp.push(el);
+    //     }
+    //   })
+    //   this.total_data = newtemp;
+    //   // console.log(newtemp, tempdata, this.total_data);
+    // }
   },
 }
 </script>
