@@ -13,7 +13,8 @@ class CreateDataController extends Controller
      */
     public function index()
     {
-        //
+        $data = CreateData::get();
+        return response()->json(['data' => $data]);
     }
 
     /**
@@ -46,25 +47,44 @@ class CreateDataController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(c $c)
+    public function show(CreateData $CreateData, $id)
     {
-        //
+        $data = CreateData::find($id);
+        return response()->json(['data' => $data]);
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(c $c)
+    public function edit(CreateData $CreateData, $id)
     {
-        //
+        $data = CreateData::find($id);
+        return response()->json(['data' => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, c $c)
+    public function update(Request $request, CreateData $CreateData)
     {
-        //
+        $request->validate([
+            'test_text' => 'required | max: 50',
+            'test_select' => 'required',
+            'radio_option' => 'required'
+        ]);
+        
+        CreateData::updateOrCreate([
+            [
+                'id' => $$CreateData->id
+            ],[
+                'test_text' => $request->test_text,
+                'test_text_area' => $request->test_text_area,
+                'test_select' => $request->test_select,
+                'radio_option' => $request->radio_option,
+                'test_check' => $request->test_check ? $request->test_check : 0
+            ]
+        ]);
     }
 
     /**

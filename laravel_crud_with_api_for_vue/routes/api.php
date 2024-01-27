@@ -19,4 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/create-data/index', [CreateDataController::class, 'index']);
+// Route::get('/create-data/{id}/edit', [CreateDataController::class, 'edit']);
+Route::get('/create-data/{id}', [CreateDataController::class, 'show']);
 Route::post('/create-data', [CreateDataController::class, 'store']);
