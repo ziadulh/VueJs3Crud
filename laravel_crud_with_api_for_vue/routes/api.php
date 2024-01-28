@@ -23,3 +23,5 @@ Route::get('/create-data/index', [CreateDataController::class, 'index']);
 // Route::get('/create-data/{id}/edit', [CreateDataController::class, 'edit']);
 Route::get('/create-data/{id}', [CreateDataController::class, 'show']);
 Route::post('/create-data', [CreateDataController::class, 'store']);
+Route::post('/create-data/update', [CreateDataController::class, 'update']);
+Route::post('/create-data/delete/{id}', [CreateDataController::class, 'destroy']);

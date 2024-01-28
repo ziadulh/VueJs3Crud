@@ -18,6 +18,11 @@ const routes = [
     name: 'ListComponent',
     component: import('../views/ListComponent.vue')
   },
+  {
+    path: '/edit/:id',
+    name: 'EditComponent',
+    component: import('../views/EditComponent.vue')
+  },
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

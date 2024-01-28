@@ -66,32 +66,30 @@ class CreateDataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CreateData $CreateData)
+    public function update(Request $request)
     {
         $request->validate([
             'test_text' => 'required | max: 50',
             'test_select' => 'required',
             'radio_option' => 'required'
         ]);
+
+        $temp_data = CreateData::find($request->id);
+
+        $temp_data->test_text = $request->test_text;
+        $temp_data->test_text_area = $request->test_text_area;
+        $temp_data->test_select = $request->test_select;
+        $temp_data->radio_option = $request->radio_option;
+        $temp_data->test_check = $request->test_check ? $request->test_check : 0;
+        $temp_data->save();
         
-        CreateData::updateOrCreate([
-            [
-                'id' => $$CreateData->id
-            ],[
-                'test_text' => $request->test_text,
-                'test_text_area' => $request->test_text_area,
-                'test_select' => $request->test_select,
-                'radio_option' => $request->radio_option,
-                'test_check' => $request->test_check ? $request->test_check : 0
-            ]
-        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(c $c)
+    public function destroy($id)
     {
-        //
+        CreateData::find($id)->delete();
     }
 }
